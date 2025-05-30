@@ -5,14 +5,7 @@ const prompt = require('prompt');
 prompt.start();
 
 prompt.get(['userSelection'], function(err, result) {
-    console.log('User selected:', result.userSelection);
-});
-const prompt = require('prompt');
-
-prompt.start();
-
-prompt.get(['userSelection'], function(err, result) {
-    const userSelection = result.userSelection;
+    const userSelection = result.userSelection.toUpperCase();
     console.log('User selected:', userSelection);
 
     const random = Math.random();
@@ -27,4 +20,8 @@ prompt.get(['userSelection'], function(err, result) {
     }
 
     console.log('Computer selected:', computerSelection);
+
+    if (userSelection === computerSelection) {
+        console.log("It's a tie!");
+    }
 });
