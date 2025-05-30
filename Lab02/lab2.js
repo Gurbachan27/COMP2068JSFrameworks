@@ -1,12 +1,10 @@
 // lab2.js
-
 const prompt = require('prompt');
 
 prompt.start();
 
 prompt.get(['userSelection'], function(err, result) {
     const userSelection = result.userSelection.toUpperCase();
-    console.log('User selected:', userSelection);
 
     const random = Math.random();
     let computerSelection = '';
@@ -19,9 +17,18 @@ prompt.get(['userSelection'], function(err, result) {
         computerSelection = 'ROCK';
     }
 
+    console.log('User selected:', userSelection);
     console.log('Computer selected:', computerSelection);
 
     if (userSelection === computerSelection) {
         console.log("It's a tie!");
+    } else if (
+        (userSelection === 'ROCK' && computerSelection === 'SCISSORS') ||
+        (userSelection === 'PAPER' && computerSelection === 'ROCK') ||
+        (userSelection === 'SCISSORS' && computerSelection === 'PAPER')
+    ) {
+        console.log('User Wins!');
+    } else {
+        console.log('Computer Wins!');
     }
 });
