@@ -1,8 +1,140 @@
+/* Body Background Variations */
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #222;
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+
+/* Container tweak for all pages */
+
+.container {
+    max-width: 900px;
+    background: #ffffffcc;
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    text-align: left;
+    transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Header styling */
+
+header {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #334e68;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+}
+
+header::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #52796f;
+    margin: 15px auto 0;
+    border-radius: 3px;
+}
+
+
+/* Center alignment specifically for project page */
+
+.project-page .container {
+    text-align: center;
+}
+
+
+/* Paragraph styling */
+
+p {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #444;
+    max-width: 720px;
+    margin: 0 auto 2rem;
+}
+
+
+/* Buttons */
+
+button,
+input[type="submit"] {
+    background: #52796f;
+    color: white;
+    padding: 14px 30px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 8px 20px rgba(82, 121, 111, 0.6);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: #354f44;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(53, 79, 68, 0.8);
+}
+
+
+/* Links */
+
 a {
-  color: #00B7FF;
+    color: #52796f;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* Footer */
+
+footer {
+    margin-top: auto;
+    padding: 15px 10px;
+    font-size: 0.9rem;
+    color: #777;
+    background: #f0f0f0;
+    border-radius: 0 0 20px 20px;
+    text-align: center;
+}
+
+
+/* Responsive tweaks */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 25px 20px;
+        margin-bottom: 30px;
+    }
+    header {
+        font-size: 2rem;
+    }
+    button,
+    input[type="submit"] {
+        width: 100%;
+        padding: 16px 0;
+    }
 }
