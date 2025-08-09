@@ -1,6 +1,37 @@
-<div class="text-center">
-    <h1>Welcome to the Lost & Found App</h1>
-    <p class="lead">Report lost or found items and help reunite people with their belongings.</p>
-    <a href="/report" class="btn btn-primary btn-lg mt-3">Report an Item</a>
-    <a href="/reports" class="btn btn-secondary btn-lg mt-3">View All Reports</a>
+{{! Home / public listing with search }}
+<div class="row">
+  <div class="col-md-8">
+    <h1>Lost & Found</h1>
+    <p class="lead">Public list of found items (read-only)</p>
+  </div>
+  <div class="col-md-4">
+    <form class="d-flex" method="get" action="/">
+      <input name="q" class="form-control me-2" type="search" placeholder="Search items" value="{{q}}">
+      <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+  </div>
 </div>
+
+<hr>
+
+{{#if items}}
+  <div class="row">
+    {{#each items}}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Found: {{this.dateFound}}</h6>
+            <p class="card-text">{{this.description}}</p>
+            {{#if this.location}}<p class="mb-1"><strong>Location:</strong> {{this.location}}</p>{{/if}}
+            {{#if this.foundBy}}
+              <p class="mb-0"><small>Reported by: {{this.foundBy.name}}</small></p>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p>No items found.</p>
+{{/if}}
