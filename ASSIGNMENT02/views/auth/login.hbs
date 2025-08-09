@@ -1,34 +1,14 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <h2>Login</h2>
-    <form method="post" action="/auth/login">
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input name="email" type="email" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input name="password" type="password" class="form-control" required>
-      </div>
-      <button class="btn btn-primary" type="submit">Login</button>
-      {{#if (and (env.GITHUB_CLIENT_ID) (env.GITHUB_CLIENT_SECRET))}}
-      {{/if}}
-    </form>
+<h2>Login</h2>
+<form action="/login" method="post">
+  <label>Email</label>
+  <input type="email" name="email" value="">
+  <label>Password</label>
+  <input type="password" name="password">
+  <button type="submit">Log in</button>
+</form>
 
-    {{#if (and false)}}
-      <!-- placeholder if you want server-side env helper for conditionals -->
-    {{/if}}
+<p>Or <a href="/auth/github">Log in with GitHub</a></p>
 
-    {{#if user}}
-      <p class="mt-3">You are already logged in.</p>
-    {{else}}
-      <hr>
-      {{#if (and (env.GITHUB_CLIENT_ID) (env.GITHUB_CLIENT_SECRET))}}
-      <a class="btn btn-dark mt-2" href="/auth/github">Login with GitHub</a>
-      {{else}}
-      <!-- If you configured GitHub, a button will appear -->
-      <a class="btn btn-dark mt-2" href="/auth/github">Login with GitHub</a>
-      {{/if}}
-    {{/if}}
-  </div>
-</div>
+{{#if error}}
+  <div class="error">{{error}}</div>
+{{/if}}

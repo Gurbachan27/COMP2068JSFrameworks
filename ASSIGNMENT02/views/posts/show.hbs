@@ -1,0 +1,15 @@
+<article class="post">
+  <h2>{{post.title}} <small>({{post.status}})</small></h2>
+  <p>{{post.description}}</p>
+  <p><strong>Location:</strong> {{post.location}}</p>
+  <p><small>Posted by {{#if post.createdBy}}{{post.createdBy.name}}{{else}}Unknown{{/if}} on {{post.createdAt}}</small></p>
+
+  {{#if currentUser}}
+    {{#ifCond post.createdBy._id currentUser._id}}
+      <p>
+        <a href="/posts/{{post._id}}/edit">Edit</a> |
+        <a href="/posts/{{post._id}}/delete">Delete</a>
+      </p>
+    {{/ifCond}}
+  {{/if}}
+</article>

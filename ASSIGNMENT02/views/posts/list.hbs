@@ -1,0 +1,28 @@
+<h2>{{#if mine}}My Reports{{else}}All Reports{{/if}}</h2>
+
+<form method="get" action="/posts">
+  <input type="search" name="q" placeholder="keyword, location..." value="{{q}}">
+  <button type="submit">Search</button>
+</form>
+
+{{#if posts.length}}
+  <ul class="post-list">
+    {{#each posts}}
+      <li>
+        <h3><a href="/posts/{{this._id}}">{{this.title}}</a> <small>({{this.status}})</small></h3>
+        <p>{{this.description}}<br><small>{{this.location}}</small></p>
+        <p><small>By {{#if this.createdBy}}{{this.createdBy.name}}{{else}}Unknown{{/if}} on {{this.createdAt}}</small></p>
+        {{#if ../../currentUser}}
+          {{#ifCond this.createdBy._id ../../currentUser._id}}
+            <p>
+              <a href="/posts/{{this._id}}/edit">Edit</a>
+              <a href="/posts/{{this._id}}/delete">Delete</a>
+            </p>
+          {{/ifCond}}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No reports found.</p>
+{{/if}}

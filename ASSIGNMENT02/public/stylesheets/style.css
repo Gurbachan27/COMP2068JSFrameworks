@@ -1,8 +1,87 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7
 }
 
-a {
-  color: #00B7FF;
+.wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem
+}
+
+.site-header {
+    background: #333;
+    color: #fff;
+    padding: .6rem 0
+}
+
+.site-header a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 1rem
+}
+
+.site-header h1 {
+    display: inline-block;
+    margin: 0
+}
+
+.container {
+    padding: 1rem
+}
+
+.hero {
+    background: #fff;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 6px
+}
+
+.btn {
+    display: inline-block;
+    padding: .5rem 1rem;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px
+}
+
+.post-list {
+    list-style: none;
+    padding: 0
+}
+
+.post-list li {
+    background: #fff;
+    padding: 1rem;
+    margin-bottom: .6rem;
+    border-radius: 6px
+}
+
+.alert {
+    padding: .6rem;
+    border-radius: 4px;
+    margin-bottom: .6rem
+}
+
+.alert.success {
+    background: #e6ffed;
+    color: #1f8a3d
+}
+
+.alert.error {
+    background: #ffe6e6;
+    color: #a12d2d
+}
+
+.errors {
+    color: #a12d2d
+}
+
+.site-footer {
+    padding: 1rem;
+    text-align: center;
+    color: #666
 }

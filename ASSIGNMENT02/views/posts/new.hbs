@@ -1,0 +1,23 @@
+<h2>Create a Report</h2>
+<form action="/posts" method="post">
+  <label>Title</label>
+  <input name="title" value="{{formData.title}}">
+  <label>Description</label>
+  <textarea name="description">{{formData.description}}</textarea>
+  <label>Location</label>
+  <input name="location" value="{{formData.location}}">
+  <label>Status</label>
+  <select name="status">
+    <option value="lost">Lost</option>
+    <option value="found">Found</option>
+  </select>
+  <button type="submit">Create</button>
+</form>
+
+{{#if errors}}
+  <ul class="errors">
+    {{#each errors}}
+      <li>{{msg}}</li>
+    {{/each}}
+  </ul>
+{{/if}}

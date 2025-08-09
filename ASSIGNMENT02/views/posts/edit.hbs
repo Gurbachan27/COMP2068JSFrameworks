@@ -1,0 +1,23 @@
+<h2>Edit Report</h2>
+<form action="/posts/{{post._id}}?_method=PUT" method="post">
+  <label>Title</label>
+  <input name="title" value="{{post.title}}">
+  <label>Description</label>
+  <textarea name="description">{{post.description}}</textarea>
+  <label>Location</label>
+  <input name="location" value="{{post.location}}">
+  <label>Status</label>
+  <select name="status">
+    <option value="lost" {{#ifCond post.status 'lost'}}selected{{/ifCond}}>Lost</option>
+    <option value="found" {{#ifCond post.status 'found'}}selected{{/ifCond}}>Found</option>
+  </select>
+  <button type="submit">Save</button>
+</form>
+
+{{#if errors}}
+  <ul class="errors">
+    {{#each errors}}
+      <li>{{msg}}</li>
+    {{/each}}
+  </ul>
+{{/if}}

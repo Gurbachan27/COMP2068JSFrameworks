@@ -1,76 +1,74 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const passport = require('passport');
-const flash = require('connect-flash');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const methodOverride = require('method-override');
+require('dotenv').config();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
-var app = express();
+const app = express();
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB Connected'))
+// DB Connection
+mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-// View engine setup
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// Middleware (order matters)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Sessions with Mongo store
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'secretkey',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
 }));
 
+// Passport setup
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
 
-// Passport config
-require('./config/passport')(passport);
-
-// Flash messages middleware
-app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg');
-    res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
-    next();
-});
+require('./config/passport-config')(passport);
 
 // Routes
-app.use('/', indexRouter);
-app.use('/auth', require('./routes/auth'));
-app.use('/items', require('./routes/items'));
-app.use('/users', usersRouter);
+app.use('/', authRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    next(createError(404));
+// Home page
+app.get('/', (req, res) => {
+    res.render('index', { user: req.user });
 });
 
-// error handler
+// Catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// Error handler
 app.use(function(err, req, res, next) {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
     res.status(err.status || 500);
-    res.render('error');
+    res.render('error', {
+        message: err.message,
+        error: req.app.get('env') === 'development' ? err : {}
+    });
 });
 
 module.exports = app;

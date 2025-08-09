@@ -1,33 +1,22 @@
-<div class="row justify-content-center">
-  <div class="col-md-6">
-    <h2>Register</h2>
+<h2>Register</h2>
+<form action="/register" method="post">
+  <label>Name</label>
+  <input type="text" name="name" value="{{formData.name}}">
+  <label>Email</label>
+  <input type="email" name="email" value="{{formData.email}}">
+  <label>Password</label>
+  <input type="password" name="password">
+  <label>Confirm password</label>
+  <input type="password" name="confirm">
+  <button type="submit">Register</button>
+</form>
 
-    {{#if errors}}
-      <div class="alert alert-danger">
-        <ul class="mb-0">
-          {{#each errors}}<li>{{this.msg}}</li>{{/each}}
-        </ul>
-      </div>
-    {{/if}}
+<p>Or <a href="/auth/github">register/login with GitHub</a>.</p>
 
-    <form method="post" action="/auth/register">
-      <div class="mb-3">
-        <label class="form-label">Name</label>
-        <input name="name" type="text" class="form-control" value="{{name}}" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input name="email" type="email" class="form-control" value="{{email}}" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input name="password" type="password" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Confirm Password</label>
-        <input name="password2" type="password" class="form-control" required>
-      </div>
-      <button class="btn btn-primary" type="submit">Register</button>
-    </form>
-  </div>
-</div>
+{{#if errors}}
+  <ul class="errors">
+  {{#each errors}}
+    <li>{{msg}}</li>
+  {{/each}}
+  </ul>
+{{/if}}

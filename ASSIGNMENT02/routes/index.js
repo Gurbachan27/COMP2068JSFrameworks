@@ -1,17 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/Item');
+const Post = require('../models/Post');
 
-// Home / public list view (read-only)
-router.get('/', async(req, res) => {
+// Home / splash page
+router.get('/', async(req, res, next) => {
+    res.render('index', { title: 'Lost & Found' });
+});
+
+// public posts list (read-only) with search
+router.get('/posts', async(req, res, next) => {
     try {
-        const q = req.query.q || '';
-        const filter = q ? { name: { $regex: q, $options: 'i' } } : {};
-        const items = await Item.find(filter).populate('foundBy', 'name').sort({ dateFound: -1 }).limit(50);
-        res.render('index', { title: 'Lost & Found', items, q });
+        const q = req.query.q ? req.query.q.trim() : '';
+        let filter = {};
+        if (q) {
+            const regex = new RegExp(q, 'i');
+            filter = { $or: [{ title: regex }, { description: regex }, { location: regex }] };
+        }
+        const posts = await Post.find(filter).populate('createdBy').sort({ createdAt: -1 }).limit(200);
+        res.render('posts/list', { title: 'All Reports', posts, q });
     } catch (err) {
-        req.flash('error_msg', 'Unable to load items');
-        res.render('index', { title: 'Lost & Found', items: [], q: '' });
+        next(err);
     }
 });
 
