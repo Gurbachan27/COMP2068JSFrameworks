@@ -1,0 +1,50 @@
+<h2>Add New Item</h2>
+
+{{#if error_msg}}
+  <div class="alert alert-danger">{{error_msg}}</div>
+{{/if}}
+
+<form action="/items/add" method="POST" class="mt-3">
+  <div class="mb-3">
+    <label for="title" class="form-label">Item Title</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      class="form-control"
+      required
+      value="{{title}}">
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      id="description"
+      name="description"
+      class="form-control"
+      rows="3"
+      required>{{description}}</textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="type" class="form-label">Type</label>
+    <select id="type" name="type" class="form-select" required>
+      <option value="">Select Type</option>
+      <option value="Lost" {{#ifEquals type "Lost"}}selected{{/ifEquals}}>Lost</option>
+      <option value="Found" {{#ifEquals type "Found"}}selected{{/ifEquals}}>Found</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input
+      type="text"
+      id="location"
+      name="location"
+      class="form-control"
+      value="{{location}}">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Item</button>
+  <a href="/items" class="btn btn-secondary ms-2">Cancel</a>
+</form>
